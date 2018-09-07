@@ -1,14 +1,7 @@
-import uuid
 from setuptools import setup
-try:  # For pip >= 10
-    from pip._internal.req import parse_requirements
-except ImportError:  # For pip < 10
-    from pip.req import parse_requirements
 
-
-# parse_requirements() returns generator of pip.req.InstallRequirement objects
-install_reqs = parse_requirements('pip_requirements.txt', session=uuid.uuid1())
-
+with open('pip_requirements.txt') as fp:
+    install_requires = fp.read()
 
 setup(
     name='Lyvi',
@@ -25,7 +18,7 @@ setup(
             'lyvi = lyvi:main'
         ]
     },
-    install_requires=[str(ir.req) for ir in install_reqs],
+    install_requires=install_requires,
     package_data={'lyvi': ['data/pianobar/*']},
     data_files=[('share/man/man1', ['doc/lyvi.1'])]
 )
